@@ -1,0 +1,32 @@
+{
+  "name": "ignitingapp",
+  "version": "1.0.0",
+  "description": "react-learning from namaste-react",
+
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mahesh146/namaste-react.git"
+  },
+  "keywords": [
+    "react",
+    "react",
+    "basics"
+  ],
+  "author": "Mahesh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mahesh146/namaste-react/issues"
+  },
+  "homepage": "https://github.com/mahesh146/namaste-react#readme",
+  "devDependencies": {
+    "parcel": "^2.12.0",
+    "process": "^0.11.10"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  }
+}
