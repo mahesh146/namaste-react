@@ -33,13 +33,13 @@ const titleElement = (
 );
 
 console.log(title);
-const HeadingComponent = () =>(
+const HeadingComponent = () =>{
   
     <div id="container">
         {titleElement}
         {<Title/>}
         <h1 className="heading">This is functional component</h1></div>
-);
+};
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render (<HeadingComponent/>);
