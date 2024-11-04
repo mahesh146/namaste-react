@@ -5,4 +5,8 @@
 3. Laying Foundation - learnings regarding JSX element and class based components
 4. Talk is cheap and show me the code - learnt Creating basic food app
 
+# React Hooks
+-useState() - Superpowerful State variable in react
+-useEffect()
+
 
