@@ -6,7 +6,6 @@ const Body = () => {
   const [listOfRestaurants, setListOfRestaurants] = useState([]);
   //console.log({listOfRestaurants})
   const [filteredRestaurant, setFilteredRestaurant] = useState([]);
-
   const [searchText, setSearchText] = useState("");
   // Whenever state variables get updated (here 'listOfRestaurants' and 'searchText' are state variables), react triggers a reconciliation cycle i.e. react re-renders the component again
   console.log("full body component got rendered again");
