@@ -3,6 +3,10 @@
     import logo from '../../assets/cheese.png';
     import { useState } from 'react';
     const Header = () =>{
+
+        let btn = "Login 0";
+        const [btn2, setButton] = useState("Login");
+        console.log("full header component got rendered again");
         return(
             <div className="header">
                 <div className="logo-container">
