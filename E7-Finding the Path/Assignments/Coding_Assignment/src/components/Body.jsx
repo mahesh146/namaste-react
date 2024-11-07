@@ -1,54 +1,35 @@
 import RestaurantCard from "./RestaurantCard";
 import { useState, useEffect } from "react";
 import Shimmer from "./Shimmer";
-import mock from "../utils/mock.json";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom";
+
 const Body = () => {
   const [listOfRestaurants, setListOfRestaurants] = useState([]);
   //console.log({listOfRestaurants})
   const [filteredRestaurant, setFilteredRestaurant] = useState([]);
+
   const [searchText, setSearchText] = useState("");
   // Whenever state variables get updated (here 'listOfRestaurants' and 'searchText' are state variables), react triggers a reconciliation cycle i.e. react re-renders the component again
   console.log("full body component got rendered again");
 
-
-  //useEffect hook gets triggered after initial render i.e after <Shimmer/> gets displayed
   useEffect(() => {
     // console.log("useEffect called 3")
     fetchData();
-  }, []);
+  }, []); //empty dependency array [], hence useEffect hook will get triggered (i.e. "console.log("useEffect called 3")" and "fetchData();" will happen) just only once when my Body component is rendered for the first time
 
   const fetchData = async () => {
-    // const data = await fetch(
-    //   "https://www.swiggy.com/dapi/restaurants/list/v5?lat=19.0759837&lng=72.8776559&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
-    // );
-    // await new Promise(resolve => setTimeout(resolve, 1000));
-
-    // const json = mock;
-
-
-    //use in case of trying to bypass cors without using cors chrome plugin
     const data = await fetch(
-      "https://corsproxy.io?https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9715987&lng=77.5945627&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=19.0759837&lng=72.8776559&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
     );
     
-    //console.log(data);
-    
     const json = await data.json();
-    //console.log(json.data.cards[1].card.card.gridElements.infoWithStyle.restaurants);
-    console.log(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
-    setListOfRestaurants(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
-    setFilteredRestaurant(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
-    // setListOfRestaurants(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
-    // setFilteredRestaurant(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+    // console.log(json.data.cards[1].card.card.gridElements.infoWithStyle.restaurants);
+
+    setListOfRestaurants(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+    setFilteredRestaurant(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
   }
 
   // ⬇️ Conditional Rendering ⬇️
-  // if(listOfRestaurants.length === 0){
-  //   return <h1>Loading......please be patient 1 ❤️</h1>
-  //   return <Shimmer/>
-  // }
-
   // console.log("Body rendered 1");
   return( listOfRestaurants.length === 0 ? (<Shimmer/>) : (
     <div className="body">
@@ -85,25 +66,9 @@ const Body = () => {
           >Search</button>
         </div>
 
-        {/* <button 
-          className="filter-btn" 
-          onClick={() => {
-            //Filter logic here ⬇️
-            const filteredList = listOfRestaurants.filter((res)=> res.info.avgRating >= 4.5)
-            setFilteredRestaurant(filteredList);
-          }}
-        >
-          Top Rated Restaurants
-        </button> */}
-
       </div>
       <div className="res-container">
-        {/* {
-          filteredRestaurant.map((restaurant, index) => (
-            <RestaurantCard key={restaurant.info.id} resData={restaurant}/>        
-          )) */}
-
-{
+        {
           filteredRestaurant.map((restaurant, index) => (
             <Link to={`/restaurants/${restaurant.info.id}`} key={restaurant.info.id}>
               <RestaurantCard resData={restaurant}/>
