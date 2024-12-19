@@ -38,18 +38,19 @@ const RestaurantMenu = () => {
   // const cuisines = restaurantInfo?.cards[2]?.card?.card?.info.cuisines;
   // const costForTwoMessage = restaurantInfo?.cards[2]?.card?.card?.info.costForTwoMessage;
    // const { name, cuisines, costForTwoMessage } = restaurantInfo?.cards[2]?.card?.card?.info; //const name = restaurantInfo?.cards[2]?.card?.card?.info.name  //but this is ❌ not working so we provide an extra '|| {}'
-  const { name, cuisines, costForTwoMessage, totalRatingsString, avgRatingString, avgRating } = restaurantInfo?.cards[2]?.card?.card?.info || {};
+   const { name, cuisines, costForTwoMessage, totalRatingsString, avgRatingString, avgRating } = restaurantInfo?.cards[2]?.card?.card?.info || {};
   const { itemCards} = restaurantInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card?.card || {};
   //console.log(name);
   console.log(itemCards)
 
   return (
-    <div className="menu">
-        <h1>{name}</h1>
-        <h2 style={{ display: 'inline-block'}}>{avgRatingString} ({totalRatingsString})</h2> 
-        <h3 className="cost">{costForTwoMessage}</h3>
-        <h3>{cuisines.join(', ')}</h3>
-        <h2>Menu</h2>
+    <div className="menu p-6 bg-gray-100 rounded-lg shadow-lg">
+        <h1 className="text-2xl font-bold mb-2 text-gray-800">{name}</h1>
+        <h2 className="text-lg text-gray-600 inline-block mb-2">{avgRatingString} ({totalRatingsString})</h2>
+        {/* <h2 style={{ display: 'inline-block'}}>{avgRatingString} ({totalRatingsString})</h2>  */}
+        <h3 className="cost text-xl font-semibold text-gray-700">{costForTwoMessage}</h3>
+        <h3 className="text-blue-600-600 mb-4">{cuisines.join(', ')}</h3>
+        <h2 className="text-xl font-bold mt-6 mb-2 text-gray-800">Menu</h2>
         {/* <ul>
         {itemCards.map((item) => (
           <li key={item.card.info.id}>
@@ -57,12 +58,12 @@ const RestaurantMenu = () => {
           </li>
         ))} 
       </ul> */}
-        <ul>
+        <ul className="list-disc pl-5">
   {itemCards?.map((item) => (
-    <li key={item.card.info.id}>
+    <li key={item.card.info.id} className="mb-2 text-gray-700">
       {item.card.info.name} - ₹{item.card.info.price/100 || item.card.info.finalPrice||item.card.info.defaultPrice/100}
     </li>
-  )) || <p>No menu items available</p>}
+  )) || <p className="text-red-500">No menu items available</p>}
 </ul>
 
       

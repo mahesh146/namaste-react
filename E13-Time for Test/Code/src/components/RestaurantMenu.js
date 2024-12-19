@@ -4,6 +4,7 @@ import { MENU_API } from "../utils/constants";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import useRestaurantMenu from "../utils/useRestaurantMenu";
+import RestaurantCategory from "./RestaurantCategory";
 const RestaurantMenu = () => {
   // const [restaurantInfo, setRestaurantInfo] = useState(null); //so this will become redundant now as we are fetching data in the useRestaurantMenu hook now so we will use this same state variable in useRestaurantMenu.jsx hook now
 
@@ -31,43 +32,47 @@ const RestaurantMenu = () => {
   //  // console.log(json);
   //   setRestaurantInfo(json.data);
   // };
-
-  
+  const [showIndex, setShowIndex] = useState(null);
   if (restaurantInfo === null) return <Shimmer />;
 // const name = restaurantInfo?.cards[2]?.card?.card?.info.name;
   // const cuisines = restaurantInfo?.cards[2]?.card?.card?.info.cuisines;
   // const costForTwoMessage = restaurantInfo?.cards[2]?.card?.card?.info.costForTwoMessage;
    // const { name, cuisines, costForTwoMessage } = restaurantInfo?.cards[2]?.card?.card?.info; //const name = restaurantInfo?.cards[2]?.card?.card?.info.name  //but this is ❌ not working so we provide an extra '|| {}'
-  const { name, cuisines, costForTwoMessage, totalRatingsString, avgRatingString, avgRating } = restaurantInfo?.cards[2]?.card?.card?.info || {};
+   const { name, cuisines, costForTwoMessage, totalRatingsString, avgRatingString, avgRating } = restaurantInfo?.cards[2]?.card?.card?.info || {};
   const { itemCards} = restaurantInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card?.card || {};
   //console.log(name);
-  console.log(itemCards)
+  //console.log("itemcards:",restaurantInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards)
+  const categories = restaurantInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter(
+  
+    (c) => 
+      c.card?.["card"]?.["@type"] === "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
+
+  );
+  //console.log("categories:", categories)
 
   return (
-    <div className="menu">
-        <h1>{name}</h1>
-        <h2 style={{ display: 'inline-block'}}>{avgRatingString} ({totalRatingsString})</h2> 
-        <h3 className="cost">{costForTwoMessage}</h3>
-        <h3>{cuisines.join(', ')}</h3>
-        <h2>Menu</h2>
-        {/* <ul>
-        {itemCards.map((item) => (
-          <li key={item.card.info.id}>
-            {item.card.info.name} - {item.card.info.defaultPrice}
-          </li>
-        ))} 
-      </ul> */}
-        <ul>
-  {itemCards?.map((item) => (
-    <li key={item.card.info.id}>
-      {item.card.info.name} - ₹{item.card.info.price/100 || item.card.info.finalPrice||item.card.info.defaultPrice/100}
-    </li>
-  )) || <p>No menu items available</p>}
-</ul>
+    <div className="text-center">
+        <h1 className="font-bold my-2 text-2xl">{name}</h1>
+       <div  className="flex justify-center my-2"> 
+        <h2 className="px-2">{avgRatingString} ({totalRatingsString})</h2>
+        <h2 className="cost text-l font-semibold text-gray-700">{costForTwoMessage}</h2>  
+      </div>
+      <p className="font-bold text-lg text-gray-800">{cuisines.join(', ')} </p>
+        <h2 className= "font-bold text-gray-700">Menu</h2>
 
-      
+        {/* categories accordions */}
+        {categories?.map((category, index) => (
+        <RestaurantCategory data={category?.card?.card}
+        key={category?.card?.card?.title}
+        showItems={index === showIndex } 
+        setShowIndex={() => setShowIndex(index === showIndex ? null : index)}
+          
+        />
+      ))}
+
     </div>
   );
+
 };
 
 export default RestaurantMenu;
